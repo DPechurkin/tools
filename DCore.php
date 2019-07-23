@@ -6,23 +6,24 @@
  * developer tools for every day
  *
  * git clone https://github.com/DPechurkin/tools.git
- * include_once('DCore.php');
+ * include_once('tools/DCore.php');
  * 
  */
 class DCore
 {	
-
+	static $path_files= '/upload/file_1c_upload/';
 	//функция сохранения файлов 
 	// data - данные которые нужно сохранить , файл массив строка, что угодно
 	// file - названиеп файла под которым будет сохраненны данные
 	// serial - нужно ли серрилизовать переменную для записи в файл , полезно если сохраняешь массивы после чтения файла производишь обратную сериализацию и у тебя готовая переменная
 	// file_append - нужно ли добавлять данные к файлу, можно делать что то типа логов 
 	static function SaveData($data, $file='' ,$serial=false,$file_append=false){
+		$file=$file==''?'log_default.txt':$file;
 		$flag=false;
 		if($data) $flag=true;
 		if($serial) $data = serialize($data);
 
-		$pach=$_SERVER['DOCUMENT_ROOT'].ClassConfig::$path_files.$file;
+		$pach=$_SERVER['DOCUMENT_ROOT'].DCore::$path_files.$file;
 		if($flag){
 			if($file_append)
 				file_put_contents($pach, $data, FILE_APPEND);
@@ -33,7 +34,8 @@ class DCore
 
 	//функция извлечение информации из файлов 
 	static function GetData($file='',$serial=false){
-		$pach=$_SERVER['DOCUMENT_ROOT'].ClassConfig::$path_files.$file;
+		$file=$file==''?'log_default.txt':$file;
+		$pach=$_SERVER['DOCUMENT_ROOT'].DCore::$path_files.$file;
 		$data=file_get_contents($pach);
 		if($serial) $data = unserialize($data);
 		return $data;
