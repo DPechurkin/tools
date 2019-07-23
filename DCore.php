@@ -11,7 +11,7 @@
  */
 class DCore
 {	
-	static $path_files= '/upload/file_1c_upload/';
+	static $path_files= '/files_log/';
 	//функция сохранения файлов 
 	// data - данные которые нужно сохранить , файл массив строка, что угодно
 	// file - названиеп файла под которым будет сохраненны данные
@@ -29,7 +29,10 @@ class DCore
 				file_put_contents($pach, $data, FILE_APPEND);
 			else 
 				file_put_contents($pach, $data);
-		} 
+			
+			return 'data writed done'; 
+		}
+		return 'not data to write'; 
 	}
 
 	//функция извлечение информации из файлов 
